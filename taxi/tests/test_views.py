@@ -32,5 +32,3 @@ class PrivateManufacturerTest(TestCase):
             list(manufacturers),
         )
         self.assertTemplateUsed(res, "taxi/manufacturer_list.html")
-
-
