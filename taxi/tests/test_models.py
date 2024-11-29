@@ -7,8 +7,8 @@ from taxi.models import Manufacturer, Car
 # Create your tests here.
 class ModelsTest(TestCase):
     def test_manufacturer_str(self):
-        manufacturer = Manufacturer.objects.create(name="test_name", country="test_country")  # створюємо новий екземпляр моделі
-        self.assertEqual(str(manufacturer), "test_name test_country")  # перевірка (фактичне значення, очікуване значення)
+        manufacturer = Manufacturer.objects.create(name="test_name", country="test_country")
+        self.assertEqual(str(manufacturer), "test_name test_country")
 
     def test_driver_str(self):
         driver = get_user_model().objects.create(

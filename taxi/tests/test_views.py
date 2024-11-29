@@ -15,6 +15,8 @@ class PublicManufacturerTest(TestCase):
 
 class PrivateManufacturerTest(TestCase):
     def setUp(self):
+        Manufacturer.objects.create(name="BMW", country="Germany")
+        Manufacturer.objects.create(name="Tesla", country="USA")
         self.user = get_user_model().objects.create_user(
             username="test",
             password="test123",
@@ -22,8 +24,6 @@ class PrivateManufacturerTest(TestCase):
         self.client.force_login(self.user)
 
     def test_retrieve_manufacturers(self):
-        Manufacturer.objects.create(name="BMW", country="Germany")
-        Manufacturer.objects.create(name="Tesla", country="USA")
         res = self.client.get(MANUFACTURER_URL)
         self.assertEqual(res.status_code, 200)
         manufacturers = Manufacturer.objects.all()
@@ -32,3 +32,11 @@ class PrivateManufacturerTest(TestCase):
             list(manufacturers),
         )
         self.assertTemplateUsed(res, "taxi/manufacturer_list.html")
+
+    def test_get_queryset_with_search(self):
+        response = self.client.get(
+            reverse("taxi:manufacturer-list") + "?name=BMW"
+        )
+        manufacturer_list = response.context["manufacturer_list"]
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(manufacturer_list), 1)
