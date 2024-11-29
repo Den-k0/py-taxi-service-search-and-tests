@@ -23,7 +23,8 @@ class ModelsTest(TestCase):
         )
 
     def test_car_str(self):
-        manufacturer = Manufacturer.objects.create(name="test_name", country="test_country")
+        manufacturer = Manufacturer.objects.create(
+            name="test_name", country="test_country")
         car = Car.objects.create(
             model="test_model",
             manufacturer=manufacturer,
